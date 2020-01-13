@@ -1,5 +1,6 @@
 name: Release latest version to gcr.io
 on:
+  push:
   schedule:
     - cron: '30 0,12 * * *'
 

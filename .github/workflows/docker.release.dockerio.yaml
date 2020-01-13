@@ -1,6 +1,5 @@
 name: Release latest version to docker.io
 on:
-  push:
   schedule:
     - cron: '45 0,12 * * *'
 

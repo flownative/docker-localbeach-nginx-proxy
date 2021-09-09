@@ -22,7 +22,7 @@ jobs:
         uses: flownative/action-git-latest-release@master
 
       - run: |
-          shopt -s dotglob && rm -rf *
+          sudo chmod -R ugo+rwX . && shopt -s dotglob && rm -rf *
 
       - uses: actions/checkout@v2
         with:

@@ -39,7 +39,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: flownative/docker-localbeach-nginx-proxy/localbeach-nginx-proxy:${{ steps.latest_version.outputs.value }}
+          tags: flownative/docker-localbeach-nginx-proxy/localbeach-nginx-proxy:${{ steps.latest_version.outputs.tag }}
 
       - name: Tag semver releases
         uses: flownative/action-docker-publish-semver@v1

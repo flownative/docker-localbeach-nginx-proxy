@@ -21,9 +21,13 @@ jobs:
         id: latest_version
         uses: flownative/action-git-latest-release@master
 
+      - run: |
+          shopt -s dotglob && rm -rf *
+
       - uses: actions/checkout@v2
         with:
           ref: ${{ steps.latest_version.outputs.tag }}
+          fetch-depth: 100
       -
         name: Set up Docker Buildx
         id: buildx

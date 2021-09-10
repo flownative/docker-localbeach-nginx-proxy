@@ -45,13 +45,6 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags:
-            - flownative/localbeach-nginx-proxy:${{ steps.latest_version.outputs.version }}
-            - flownative/localbeach-nginx-proxy:latest
-#
-#      - name: Dispatch
-#        uses: peter-evans/repository-dispatch@v1
-#        with:
-#          token: ${{ secrets.GITHUB_BOT_TOKEN }}
-#          event-type: image-built
-#          client-payload: '{"image_name": "${{ steps.build_image.outputs.image_name }}", "image_tag": "${{ steps.build_image.outputs.image_tag }}"}'
+          tags: |
+            flownative/localbeach-nginx-proxy:${{ steps.latest_version.outputs.version }}
+            flownative/localbeach-nginx-proxy:latest

@@ -33,17 +33,25 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_IO_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_IO_REGISTRY_PASSWORD }}
+
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: flownative/docker-localbeach-nginx-proxy/localbeach-nginx-proxy:${{ steps.latest_version.outputs.version }}
-
-      - name: Dispatch
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.GITHUB_BOT_TOKEN }}
-          event-type: image-built
-          client-payload: '{"image_name": "${{ steps.build_image.outputs.image_name }}", "image_tag": "${{ steps.build_image.outputs.image_tag }}"}'
+          tags:
+            - flownative/localbeach-nginx-proxy:${{ steps.latest_version.outputs.version }}
+            - flownative/localbeach-nginx-proxy:latest
+#
+#      - name: Dispatch
+#        uses: peter-evans/repository-dispatch@v1
+#        with:
+#          token: ${{ secrets.GITHUB_BOT_TOKEN }}
+#          event-type: image-built
+#          client-payload: '{"image_name": "${{ steps.build_image.outputs.image_name }}", "image_tag": "${{ steps.build_image.outputs.image_tag }}"}'

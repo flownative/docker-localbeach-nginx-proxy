@@ -1,0 +1,53 @@
+name: Weekly Builds
+on:
+  schedule:
+    - cron: '30 0 * * 1'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'master'
+          fetch-depth: 100
+
+      - name: Determine latest version
+        id: latest_version
+        uses: flownative/action-git-latest-release@master
+
+      - run: |
+          sudo chmod -R ugo+rwX . && shopt -s dotglob && rm -rf *
+
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.latest_version.outputs.tag }}
+          fetch-depth: 100
+      -
+        name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_IO_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_IO_REGISTRY_PASSWORD }}
+
+      - name: Login to Google Artifacts Registry
+        uses: docker/login-action@v1
+        with:
+          username: '_json_key'
+          password: ${{ secrets.GOOGLE_ARTIFACTS_PASSWORD_DOCKER }}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            flownative/localbeach-nginx-proxy:${{ steps.latest_version.outputs.version }}
+            flownative/localbeach-nginx-proxy:latest
+            europe-docker.pkg.dev/flownative/docker/localbeach-nginx-proxy:${{ steps.latest_version.outputs.version }}
+            europe-docker.pkg.dev/flownative/docker/localbeach-nginx-proxy:latest

@@ -4,8 +4,8 @@
  *   version 2.2
  *
  */
-@import url("https://fonts.googleapis.com/css?family=Permanent+Marker");
-h1, h2, h3, h4, h5, h6 {
+
+ h1, h2, h3, h4, h5, h6 {
   font-weight: 100;
 }
 
@@ -7880,10 +7880,6 @@ body.landing-page {
     text-align: left;
     display: inline-block;
   }
-}
-.handwritten {
-  font-family: "Permanent Marker", "ars-maquette-web", "helvetica neue", arial, helvetica, sans-serif;
-  font-size: 36px;
 }
 
 .logo {

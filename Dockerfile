@@ -1,4 +1,4 @@
-FROM jwilder/nginx-proxy:1.6-alpine
+FROM jwilder/nginx-proxy:1.7-alpine
 LABEL maintainer="Christian Müller <christian@flownative.com>"
 
 COPY nginx/proxy.conf /etc/nginx/proxy.conf
